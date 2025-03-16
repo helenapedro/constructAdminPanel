@@ -11,6 +11,7 @@ import ProjectDetailsCard from "./components/ProjectDetailsCard";
 import Certificate from "./pages/Certificate/Certificate";
 import NotFound from "./pages/NotFound";
 import AboutContainer from "./pages/About/AboutContainer";
+import ProtectedRoute from "./ProtectedRoute";
 
 const App = () => {
   return (
@@ -21,8 +22,19 @@ const App = () => {
           <Routes>
             <Route path="/" element={<ProjectsContainer />} />
             <Route path="/projects/:id" element={<ProjectDetailsCard />} />
-            <Route path="/education" element={<Certificate />} />
-            <Route path="/about" element={<AboutContainer />} />
+            
+            {/* Protect the /education route */}
+            <Route
+              path="/education"
+              element={<ProtectedRoute element={<Certificate />} />}
+            />
+            
+            {/* Protect the /about route */}
+            <Route
+              path="/about"
+              element={<ProtectedRoute element={<AboutContainer />} />}
+            />
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Main>
