@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { db } from "../firebase";
 
 const useData = (collectionName, id = null) => {
-  const [data, setData] = useState(id ? null : []);
+  const [data, setData] = useState(id ? null : []); 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -14,25 +14,31 @@ const useData = (collectionName, id = null) => {
 
       try {
         if (id) {
-          // Fetch single document
+          // Fetch a single document
           const docRef = doc(db, collectionName, id);
+
           const docSnap = await getDoc(docRef);
+
           if (docSnap.exists()) {
             setData({ id: docSnap.id, ...docSnap.data() });
           } else {
             throw new Error("Document not found");
           }
+
         } else {
-          // Fetch all documents
+          // Fetch all documents in the collection
           const snapshot = await getDocs(collection(db, collectionName));
+
           const docs = snapshot.docs.map((doc) => ({
-            id: doc.id,
+            id: doc.id, // Include document ID
             ...doc.data(),
           }));
+
           setData(docs);
         }
+        
       } catch (err) {
-        console.error(`Error fetching ${collectionName}:`, err);
+        console.error(`Error fetching data from ${collectionName}:`, err);
         setError(err);
       } finally {
         setLoading(false);
@@ -57,7 +63,7 @@ const useData = (collectionName, id = null) => {
         );
       }
     } catch (err) {
-      console.error(`Error updating ${collectionName}:`, err);
+      console.error(`Error updating document in ${collectionName}:`, err);
       setError(err);
     } finally {
       setLoading(false);
@@ -77,7 +83,7 @@ const useData = (collectionName, id = null) => {
         setData((prevData) => prevData.filter((item) => item.id !== deleteId));
       }
     } catch (err) {
-      console.error(`Error deleting ${collectionName}:`, err);
+      console.error(`Error deleting document from ${collectionName}:`, err);
       setError(err);
     } finally {
       setLoading(false);

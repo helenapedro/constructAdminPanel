@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import config from '../../config';
 import StatusBadge from './StatusBadge';
 import { Row, Col, Card, Form, Button } from 'react-bootstrap';
@@ -8,11 +8,35 @@ import { SiWhatsapp } from 'react-icons/si';
 import herostyles from '../../components/ui/Hero.module.css';
 import imagestyles from '../../components/ui/Image.module.css';
 import containerstyles from '../../components/ui/Container.module.css';
-import { db, doc, updateDoc } from '../../firebase';
+import { db, doc, getDoc, updateDoc } from '../../firebase';
+import OwnerData from '../../types/index';
 
 const OwnerIntroduction = ({ ownerData }) => {
+    const documentId = 'homeInfo';
+    const [formData, setFormData] = useState(OwnerData);
+    const [originalData, setOriginalData] = useState(OwnerData);
     const [editable, setEditable] = useState(false);
-    const [formData, setFormData] = useState(ownerData);
+
+    useEffect(() => {
+        const fetchOwnerData = async () => {
+            try {
+                const docRef = doc(db, 'home', documentId);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    const data = { id: documentId, ...docSnap.data() }; // Add the ID to the data
+                    setFormData(data);
+                    setOriginalData(data);
+                    console.log('Owner Data Fetched:', data);
+                } else {
+                    console.error('No such document!');
+                }
+            } catch (error) {
+                console.error('Error fetching owner data:', error);
+            }
+        };
+
+        fetchOwnerData();
+    }, [documentId]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -24,16 +48,33 @@ const OwnerIntroduction = ({ ownerData }) => {
 
     const handleEditToggle = () => {
         setEditable(!editable);
+        setOriginalData(formData); // Save the original data
     };
 
     const handleSave = async () => {
         try {
-            const ownerDocRef = doc(db, 'home', formData.id); // Assuming 'owners' is your collection and formData contains the document ID
-            await updateDoc(ownerDocRef, formData);
+            const docRef = doc(db, 'home', documentId);
+            await updateDoc(docRef, {
+                mainImage: formData.mainImage,
+                name: formData.name,
+                experienceDescription: formData.experienceDescription,
+                experienceYears: formData.experienceYears,
+                qhseExperienceYears: formData.qhseExperienceYears,
+                motaEngilLink: formData.motaEngilLink,
+                oeaCardLink: formData.oeaCardLink,
+                showcaseDescription: formData.showcaseDescription,
+                title: formData.title,
+            });
             setEditable(false);
+            console.log('Document successfully updated');
         } catch (error) {
-            console.error('Error updating document: ', error);
+            console.error('Error updating document:', error);
         }
+    };
+
+    const handleCancel = () => {
+        setFormData(originalData);
+        setEditable(false);
     };
 
     return (
