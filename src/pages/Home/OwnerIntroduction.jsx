@@ -8,8 +8,7 @@ import { SiWhatsapp } from 'react-icons/si';
 import herostyles from '../../components/ui/Hero.module.css';
 import imagestyles from '../../components/ui/Image.module.css';
 import containerstyles from '../../components/ui/Container.module.css';
-import { db } from '../../firebase';
-import { doc, updateDoc } from '../../firebase';
+import { db, doc, updateDoc } from '../../firebase';
 
 const OwnerIntroduction = ({ ownerData }) => {
     const [editable, setEditable] = useState(false);
