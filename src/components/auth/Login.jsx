@@ -37,7 +37,7 @@ const Login = () => {
           <div style={styles.container}>
                {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error message */}
                {user ? (
-                    <p>Welcome, {user.email}</p> // Welcome message if user is logged in
+                    <p>Welcome, {user.email}</p>
                ) : (
                     <form onSubmit={handleSubmit} style={styles.form}>
                          <img src={`${config.paradoxoUrl}`} alt="Login" style={styles.image} />

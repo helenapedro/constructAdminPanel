@@ -6,7 +6,8 @@ const config = {
     trainingUrl: `${baseUrl}certificates/`,
     projectsDataUrl: `${baseUrl}data/projectsData.json`,
     resumeUrl: "https://pedropublicfiles.s3.us-east-2.amazonaws.com/CV_Jose_Pedro_EN.pdf",
-    linkedInUrl: "http://linkedin.com/in/josefpedro/"
+    linkedInUrl: "http://linkedin.com/in/josefpedro/",
+    paradoxoUrl: `${baseUrl}paradoxo.jpg`
 };
 
 export default config;

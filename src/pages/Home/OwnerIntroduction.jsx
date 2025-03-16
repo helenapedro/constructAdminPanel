@@ -3,7 +3,7 @@ import config from '../../config';
 import StatusBadge from './StatusBadge';
 import { Row, Col, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { FaEnvelope, FaFileAlt, FaLinkedin } from 'react-icons/fa';
+import { FaEnvelope, FaFileAlt } from 'react-icons/fa';
 import { SiWhatsapp } from 'react-icons/si';
 import herostyles from '../../components/ui/Hero.module.css';
 import imagestyles from '../../components/ui/Image.module.css';
@@ -31,7 +31,6 @@ const OwnerIntroduction = ({ ownerData }) => {
                             <StatusBadge Icon={FaEnvelope} href={`mailto:jose.pedro7@outlook.com`} />
                             <StatusBadge Icon={SiWhatsapp} href={`https://wa.me/+244947462094`} />
                             <StatusBadge Icon={FaFileAlt} href={config.resumeUrl} />
-                            {/*<StatusBadge Icon={FaLinkedin} href={config.linkedInUrl} /> */}
                         </div>
                     </Col>
 

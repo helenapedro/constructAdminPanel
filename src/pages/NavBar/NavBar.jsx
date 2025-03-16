@@ -1,27 +1,34 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux'; // Import useSelector to access Redux state
+import { useSelector, useDispatch } from 'react-redux'; // Import useDispatch for dispatching logout
+import { logout } from '../../redux/authSlice'; // Import the logout action
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPortrait, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
+import { faPortrait, faGraduationCap, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import styles from "./NavBar.module.css";
 import iconStyles from '../../styles/Icons.module.css';
 
 const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+  const dispatch = useDispatch();
 
-  // Access the auth state to check if the user is authenticated
+  // Access authentication state
   const isAuthenticated = useSelector((state) => !!state.auth.user);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
+  const handleLogout = () => {
+    dispatch(logout()); // Dispatch the logout action
+    toggleMenu(); // Close the menu after logout
+  };
+
   return (
     <nav className={styles.nav}>
       <div className={menuOpen ? styles.active : ''} onClick={toggleMenu}></div>
       <div className={`${styles.menu} ${menuOpen ? styles.show : ''}`}>
-        {/* Login should always be accessible */}
+        {/* Login for unauthenticated users */}
         {!isAuthenticated && (
           <Link
             to="/login"
@@ -33,7 +40,7 @@ const NavBar = () => {
           </Link>
         )}
 
-        {/* Protect other routes */}
+        {/* Links for authenticated users */}
         {isAuthenticated && (
           <>
             <Link
@@ -69,6 +76,14 @@ const NavBar = () => {
               <FontAwesomeIcon icon={['fab', 'linkedin']} className={`${iconStyles.icon} ${iconStyles.brands} fab fa-linkedin`} />
               <span>LinkedIn</span>
             </a>
+            {/* Logout Button */}
+            <button
+              onClick={handleLogout}
+              className={styles.logoutButton} // Optional: Add styles for the logout button
+            >
+              <FontAwesomeIcon icon={faSignOutAlt} className={`${iconStyles.icon} ${iconStyles.solid}`} />
+
+            </button>
           </>
         )}
       </div>
