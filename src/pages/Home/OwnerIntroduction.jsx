@@ -169,14 +169,54 @@ const OwnerIntroduction = ({ ownerData }) => {
                         </Card.Text>
 
                         <Card.Text className="mb-2">
-                            This is a showcase of my projects and abilities.
+                            {editable ? (
+                                <Form.Control
+                                    as="textarea"
+                                    name="experienceDescription"
+                                    value={formData.experienceDescription}
+                                    onChange={handleChange}
+                                />
+                            ) : (
+                                formData.experienceDescription
+                            )}
+                        </Card.Text>
+
+                        <Card.Text className="mb-2">
+                            {editable ? (
+                                <Form.Control
+                                    as="textarea"
+                                    name="showcaseDescription"
+                                    value={formData.showcaseDescription}
+                                    onChange={handleChange}
+                                />
+                            ) : (
+                                formData.showcaseDescription
+                            )}
+                        </Card.Text>
+
+                        <Card.Text className="mb-2">
+                            {editable ? (
+                                <Form.Control
+                                    type="text"
+                                    name="title"
+                                    value={formData.title}
+                                    onChange={handleChange}
+                                />
+                            ) : (
+                                formData.title
+                            )}
                         </Card.Text>
 
                         <div className="d-flex justify-content-end">
                             {editable ? (
-                                <Button variant="primary" onClick={handleSave}>
-                                    Save
-                                </Button>
+                                <>
+                                    <Button variant="primary" onClick={handleSave}>
+                                        Save
+                                    </Button>
+                                    <Button variant="secondary" onClick={handleCancel} className="ms-2">
+                                        Cancel
+                                    </Button>
+                                </>
                             ) : (
                                 <Button variant="secondary" onClick={handleEditToggle}>
                                     Edit

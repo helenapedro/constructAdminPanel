@@ -64,13 +64,13 @@ const OwnerData = {
      id: '', 
      mainImage: '', 
      name: '',
-     experienceDescription: '', // Description of the owner's experience
-     experienceYears: '', // Number of years in experience (stored as a string in the database)
-     qhseExperienceYears: 0, // Number of years in QHSE (stored as a number in the database)
-     motaEngilLink: '', // Link to Mota-Engil profile
-     oeaCardLink: '', // Link to OEA card
-     showcaseDescription: '', // Description of the showcase
+     experienceDescription: '', 
+     experienceYears: '', 
+     qhseExperienceYears: 0, 
+     motaEngilLink: '', 
+     oeaCardLink: '', 
+     showcaseDescription: '', 
      timestamp: null, // Timestamp object (Firestore stores as a specific type)
-     title: '', // Owner's title
+     title: '', 
  };
  
