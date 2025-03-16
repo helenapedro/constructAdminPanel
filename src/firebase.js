@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, doc, updateDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -22,5 +22,7 @@ const db = getFirestore(firebaseApp);
 
 // Authentication instance
 const auth = getAuth(firebaseApp);
+
+
 
 export { db, auth }; 
