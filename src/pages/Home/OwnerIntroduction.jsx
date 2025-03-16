@@ -168,18 +168,16 @@ const OwnerIntroduction = ({ ownerData }) => {
                             .
                         </Card.Text>
 
-                        <Card.Text className="mb-2">
-                            {editable ? (
+                        {editable && (
+                            <Card.Text className="mb-2">
                                 <Form.Control
                                     as="textarea"
                                     name="experienceDescription"
                                     value={formData.experienceDescription}
                                     onChange={handleChange}
                                 />
-                            ) : (
-                                formData.experienceDescription
-                            )}
-                        </Card.Text>
+                            </Card.Text>
+                        )}
 
                         <Card.Text className="mb-2">
                             {editable ? (
