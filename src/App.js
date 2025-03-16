@@ -12,6 +12,7 @@ import Certificate from "./pages/Certificate/Certificate";
 import NotFound from "./pages/NotFound";
 import AboutContainer from "./pages/About/AboutContainer";
 import ProtectedRoute from "./ProtectedRoute";
+import Login from "./components/auth/Login";
 
 const App = () => {
   return (
@@ -20,22 +21,32 @@ const App = () => {
         <NavBar />
         <Main>
           <Routes>
-            <Route path="/" element={<ProjectsContainer />} />
-            <Route path="/projects/:id" element={<ProjectDetailsCard />} />
-            
-            {/* Protect the /education route */}
+            {/* Public Route */}
+            <Route path="/login" element={<Login />} />
+
+            {/* Protected Routes */}
+            <Route
+              path="/"
+              element={<ProtectedRoute element={<ProjectsContainer />} />}
+            />
+            <Route
+              path="/projects/:id"
+              element={<ProtectedRoute element={<ProjectDetailsCard />} />}
+            />
             <Route
               path="/education"
               element={<ProtectedRoute element={<Certificate />} />}
             />
-            
-            {/* Protect the /about route */}
             <Route
               path="/about"
               element={<ProtectedRoute element={<AboutContainer />} />}
             />
 
-            <Route path="*" element={<NotFound />} />
+            {/* Fallback Route */}
+            <Route
+              path="*"
+              element={<ProtectedRoute element={<NotFound />} />}
+            />
           </Routes>
         </Main>
       </Wrapper>

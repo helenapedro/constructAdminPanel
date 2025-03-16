@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
-import db from "../../firebase";
+import { db } from "../../firebase";
 import SkillsHeader from "./SkillsHeader";
 import SkillsBody from "./SkillsBody";
 import styles from './Skills.module.css';
@@ -39,14 +39,14 @@ const SkillsTable = () => {
       if (a[path] > b[path]) return 1 * order;
       return 0;
     });
-    setSkills(sortedSkills); 
+    setSkills(sortedSkills);
   };
 
-   // Wrap skills with the class for styling
+  // Wrap skills with the class for styling
   const wrappedSkills = wrapSkillsField(skills, styles.number);
 
   return (
-    <div> 
+    <div>
       {error && <p>Error: {error}</p>}
       <header className={styles['skills-table']}>
         <section className={styles.panel}>
