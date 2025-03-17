@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Form, Card } from 'react-bootstrap';
-import imagestyles from '../../components/ui/Image.module.css';
-import herostyles from '../../components/ui/Hero.module.css';
+import imagestyles from '../ui/Image.module.css';
+import herostyles from '../ui/Hero.module.css';
 
 const OwnerImage = ({ formData, editable, handleChange }) => {
      return (

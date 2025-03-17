@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Button, Card, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import herostyles from '../../components/ui/Hero.module.css';
+import herostyles from '../ui/Hero.module.css';
 
 const OwnerDetails = ({ formData, editable, handleChange, handleSave, handleCancel, handleEditToggle }) => {
      return (
