@@ -94,8 +94,36 @@
   border-bottom-width: 0.5em;
 }
 
+.logoutButton {
+  display: inline-block;
+  color: var(--color-container);
+  font-size: 1.5em;
+  height: 2em;
+  line-height: 2em;
+  margin: 0 0.5em;
+  padding: 0 1em;
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 0.25em;
+  cursor: pointer;
+  transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+}
+
+.logoutButton:hover {
+  background-color: var(--color-border);
+  color: var(--color-background);
+}
+
 @media screen and (max-width: 980px) {
   .nav a span {
     display: none;
+  }
+
+  .logoutButton {
+    font-size: 0.8em;
+    height: 1em;
+    line-height: 1em;
+    margin: 0 0em;
+    padding: 0 0.5em;
   }
 }

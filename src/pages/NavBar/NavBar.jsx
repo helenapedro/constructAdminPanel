@@ -79,9 +79,9 @@ const NavBar = () => {
             {/* Logout Button */}
             <button
               onClick={handleLogout}
-              className={styles.logoutButton} // Optional: Add styles for the logout button
+              className={styles.logoutButton}
             >
-              <FontAwesomeIcon icon={faSignOutAlt} className={`${iconStyles.icon} ${iconStyles.solid}`} />
+              <FontAwesomeIcon icon={faSignOutAlt} />
 
             </button>
           </>
