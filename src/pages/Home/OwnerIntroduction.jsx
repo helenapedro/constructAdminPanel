@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import config from '../../config';
-import StatusBadge from './StatusBadge';
-import { Row, Col, Card, Form, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { FaEnvelope, FaFileAlt } from 'react-icons/fa';
-import { SiWhatsapp } from 'react-icons/si';
-import herostyles from '../../components/ui/Hero.module.css';
-import imagestyles from '../../components/ui/Image.module.css';
-import containerstyles from '../../components/ui/Container.module.css';
+import { Row, Card } from 'react-bootstrap';
 import { db, doc, getDoc, updateDoc } from '../../firebase';
 import OwnerData from '../../types/index';
+import OwnerDetails from '../../components/OwnerIntroduction/OwnerDetails';
+import OwnerImage from '../../components/OwnerIntroduction/OwnerImage';
+import StatusBadges from '../../components/OwnerIntroduction/StatusBadges';
+import containerstyles from '../../components/ui/Container.module.css';
 
 const OwnerIntroduction = ({ ownerData }) => {
     const documentId = 'homeInfo';
@@ -82,146 +78,20 @@ const OwnerIntroduction = ({ ownerData }) => {
             <Card.Body className={` p-4`}>
                 <Row className="align-items-center">
                     {/* Profile Image */}
-                    <Col md={4} className="text-center">
-                        {formData.mainImage && (
-                            <img
-                                src={formData.mainImage}
-                                alt={formData.name}
-                                className={`${imagestyles.heroImage}`}
-                            />
-                        )}
-                        <Card.Title as="h2" className={`${herostyles.fullName} fw-bold`}>
-                            {editable ? (
-                                <Form.Control
-                                    type="text"
-                                    name="name"
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                />
-                            ) : (
-                                formData.name
-                            )}
-                        </Card.Title>
-                        <div className="d-flex justify-content-center justify-content-md-center gap-2 overflow-auto">
-                            <StatusBadge Icon={FaEnvelope} href={`mailto:jose.pedro7@outlook.com`} />
-                            <StatusBadge Icon={SiWhatsapp} href={`https://wa.me/+244947462094`} />
-                            <StatusBadge Icon={FaFileAlt} href={config.resumeUrl} />
-                        </div>
-                    </Col>
+                    <OwnerImage formData={formData} editable={editable} handleChange={handleChange} />
+
+                    {/* Status Badges */}
+                    <StatusBadges />
 
                     {/* Owner Details */}
-                    <Col md={8} className={`${herostyles.text}`}>
-                        <Card.Text>
-                            <strong>Hello, my name is </strong>
-                            {editable ? (
-                                <Form.Control
-                                    type="text"
-                                    name="name"
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                    className={`${herostyles.name}`}
-                                />
-                            ) : (
-                                <Link to="/about" className={`${herostyles.name}`}>
-                                    {formData.name}
-                                </Link>
-                            )}
-                            , an experienced Construction Engineer with over{' '}
-                            <strong className={`${herostyles.experienceYear} ${herostyles.colorTwo}`}>
-                                {editable ? (
-                                    <Form.Control
-                                        type="number"
-                                        name="experienceYears"
-                                        value={formData.experienceYears}
-                                        onChange={handleChange}
-                                    />
-                                ) : (
-                                    formData.experienceYears
-                                )}
-                            </strong> years in project management and{' '}
-                            <strong className={`${herostyles.experienceYear} ${herostyles.colorTwo}`}>
-                                {editable ? (
-                                    <Form.Control
-                                        type="number"
-                                        name="qhseExperienceYears"
-                                        value={formData.qhseExperienceYears}
-                                        onChange={handleChange}
-                                    />
-                                ) : (
-                                    formData.qhseExperienceYears
-                                )}
-                                +
-                            </strong> year as Coordinator of QHSE-Quality at{' '}
-                            {editable ? (
-                                <Form.Control
-                                    type="text"
-                                    name="motaEngilLink"
-                                    value={formData.motaEngilLink}
-                                    onChange={handleChange}
-                                    className={herostyles.colorTwo}
-                                />
-                            ) : (
-                                <Link to={formData.motaEngilLink} target="_blank" rel="noopener noreferrer" className={herostyles.colorTwo}>
-                                    Mota-Engil Angola
-                                </Link>
-                            )}
-                            .
-                        </Card.Text>
-
-                        {editable && (
-                            <Card.Text className="mb-2">
-                                <Form.Control
-                                    as="textarea"
-                                    name="experienceDescription"
-                                    value={formData.experienceDescription}
-                                    onChange={handleChange}
-                                />
-                            </Card.Text>
-                        )}
-
-                        <Card.Text className="mb-2">
-                            {editable ? (
-                                <Form.Control
-                                    as="textarea"
-                                    name="showcaseDescription"
-                                    value={formData.showcaseDescription}
-                                    onChange={handleChange}
-                                />
-                            ) : (
-                                formData.showcaseDescription
-                            )}
-                        </Card.Text>
-
-                        <Card.Text className="mb-2">
-                            {editable ? (
-                                <Form.Control
-                                    type="text"
-                                    name="title"
-                                    value={formData.title}
-                                    onChange={handleChange}
-                                />
-                            ) : (
-                                formData.title
-                            )}
-                        </Card.Text>
-
-                        <div className="d-flex justify-content-end">
-                            {editable ? (
-                                <>
-                                    <Button variant="primary" onClick={handleSave}>
-                                        Save
-                                    </Button>
-                                    <Button variant="secondary" onClick={handleCancel} className="ms-2">
-                                        Cancel
-                                    </Button>
-                                </>
-                            ) : (
-                                <Button variant="secondary" onClick={handleEditToggle}>
-                                    Edit
-                                </Button>
-                            )}
-                        </div>
-                    </Col>
+                    <OwnerDetails
+                        formData={formData}
+                        editable={editable}
+                        handleChange={handleChange}
+                        handleSave={handleSave}
+                        handleCancel={handleCancel}
+                        handleEditToggle={handleEditToggle}
+                    />
                 </Row>
             </Card.Body>
         </Card>
