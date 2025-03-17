@@ -8,8 +8,8 @@ import { wrapNumbersWithClass } from '../../utils/WrapNumbers';
 import ProjectHeader from './ProjectHeader';
 import ProjectActivities from './ProjectActivities';
 import ProjectImages from './ProjectImages';
-import ProjectEditButtons from './ProjectEditButtons';
 import styles from '../../pages/projects/Project.module.css';
+import ProjectEditButtons from './ProjectEditButtons';
 import numberstyles from '../../components/ui/Number.module.css';
 import imagestyles from '../../components/ui/Image.module.css';
 import containerstyles from '../../components/ui/Container.module.css';
@@ -30,7 +30,10 @@ const ProjectDetails = ({ projectId }) => {
 
      useEffect(() => {
           if (project) {
-               setFormData(project);
+               setFormData({
+                    ...project,
+                    activities: project.activities || [],
+               });
           }
      }, [project]);
 

@@ -15,7 +15,7 @@ const ProjectActivities = ({
 }) => {
      return (
           <>
-               {Array.isArray(formData.activities) && formData.activities.length > 0 && (
+               {Array.isArray(formData.activities) && formData.activities.length > 0 ? (
                     formData.activities.map((activitySection, sectionIndex) => (
                          <div key={sectionIndex}>
                               {editable ? (
@@ -25,7 +25,7 @@ const ProjectActivities = ({
                                              <Form.Control
                                                   type="text"
                                                   name={`activities[${sectionIndex}].header`}
-                                                  value={activitySection.header}
+                                                  value={activitySection.header || ''}
                                                   onChange={(e) => handleActivityChange(sectionIndex, 'header', e.target.value)}
                                              />
                                         </Form.Group>
@@ -63,6 +63,8 @@ const ProjectActivities = ({
                               )}
                          </div>
                     ))
+               ) : (
+                    <p>No activities available.</p>
                )}
           </>
      );
