@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Card, Button, Row, Col, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import useData from './../../Hooks/useData';
-import useHomeData from './../../Hooks/homeData';
+import { useQuery } from 'react-query';
 import * as iconsfa from 'react-icons/fa';
 import ProjectCarousel from '../../components/Project/ProjectCarousel';
 import OwnerIntroduction from '../Home/OwnerIntroduction';
@@ -13,17 +12,19 @@ import styles from './ProjectContainer.module.css';
 import mainStyles from '../../components/Main.module.css';
 import containerstyles from '../../components/ui/Container.module.css';
 import prodetailsstyles from '../../components/ui/ProjectDetails.module.css';
+import { fetchProjects, fetchCategories, fetchOwnerData } from '../../api';
 
 const ProjectsContainer = () => {
-    const { data: projects, loading: projectsLoading, error: projectsError } = useData('projects');
-    const { data: categories, loading: categoriesLoading, error: categoriesError } = useData('category');
-    const { data: ownerData, loading: ownerLoading, error: ownerError } = useHomeData('home', 'homeInfo');
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [modalImage, setModalImage] = useState('');
 
     const pageSize = 8;
+
+    const { data: projects, isLoading: projectsLoading, error: projectsError } = useQuery('projects', fetchProjects);
+    const { data: categories, isLoading: categoriesLoading, error: categoriesError } = useQuery('categories', fetchCategories);
+    const { data: ownerData, isLoading: ownerLoading, error: ownerError } = useQuery('ownerData', () => fetchOwnerData('home', 'homeInfo'));
 
     const handlePageChangeWrapper = (page) => handlePageChange(page, setCurrentPage);
 
@@ -51,7 +52,6 @@ const ProjectsContainer = () => {
         setModalImage(imageUrl);
         setShowModal(true);
     };
-
 
     const closeModal = () => setShowModal(false);
 
@@ -119,7 +119,6 @@ const ProjectsContainer = () => {
                     )}
                 </div>
             </Row>
-
 
             <Modal show={showModal} onHide={closeModal} centered>
                 <Modal.Body>
