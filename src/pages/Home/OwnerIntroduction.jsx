@@ -22,7 +22,7 @@ const OwnerIntroduction = () => {
                     const data = { id: documentId, ...docSnap.data() }; // Add the ID to the data
                     setFormData(data);
                     setOriginalData(data);
-                    console.log('Owner Data Fetched:', data);
+                    //console.log('Owner Data Fetched:', data);
                 } else {
                     console.error('No such document!');
                 }

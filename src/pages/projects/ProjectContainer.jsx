@@ -133,7 +133,7 @@ const ProjectsContainer = () => {
 
             <Modal show={showModal} onHide={closeProjectModal} centered>
                 {selectedProjectId ? (
-                    <ProjectDetails projectId={selectedProjectId} />
+                    <ProjectDetails projectId={selectedProjectId} onClose={closeProjectModal} />
                 ) : (
                     <Modal.Body>
                         <img src={modalImage} alt="Project" className="img-fluid" />

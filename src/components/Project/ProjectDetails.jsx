@@ -13,12 +13,13 @@ import prodetailsstyles from '../../components/ui/ProjectDetails.module.css';
 import containerstyles from '../../components/ui/Container.module.css';
 import cardstyles from '../../components/ui/card.module.css';
 
-const ProjectDetails = ({ projectId }) => {
+const ProjectDetails = ({ projectId, onClose }) => {
      const queryClient = useQueryClient();
      const { data: project, isLoading, error } = useQuery(['project', projectId], () => fetchProjectDetails(projectId));
      const mutation = useMutation((updatedData) => updateProjectDetails(projectId, updatedData), {
           onSuccess: () => {
                queryClient.invalidateQueries(['project', projectId]);
+               onClose();
           },
      });
 
@@ -244,6 +245,7 @@ const ProjectDetails = ({ projectId }) => {
 
 ProjectDetails.propTypes = {
      projectId: PropTypes.string.isRequired,
+     onClose: PropTypes.func.isRequired,
 };
 
 export default ProjectDetails;
