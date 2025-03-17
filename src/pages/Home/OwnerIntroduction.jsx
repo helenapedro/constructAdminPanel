@@ -7,7 +7,7 @@ import OwnerImage from '../../components/OwnerIntroduction/OwnerImage';
 import StatusBadges from '../../components/OwnerIntroduction/StatusBadges';
 import containerstyles from '../../components/ui/Container.module.css';
 
-const OwnerIntroduction = ({ ownerData }) => {
+const OwnerIntroduction = () => {
     const documentId = 'homeInfo';
     const [formData, setFormData] = useState(OwnerData);
     const [originalData, setOriginalData] = useState(OwnerData);
