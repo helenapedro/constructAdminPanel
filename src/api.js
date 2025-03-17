@@ -10,6 +10,15 @@ export const fetchCategories = async () => {
     return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 };
 
+export const fetchAllCategories = async () => {
+    const querySnapshot = await getDocs(collection(db, 'categories'));
+    const categories = [];
+    querySnapshot.forEach((doc) => {
+        categories.push({ id: doc.id, ...doc.data() });
+    });
+    return categories;
+};
+
 export const fetchOwnerData = async (collectionName, documentId) => {
     const docRef = doc(db, collectionName, documentId);
     const docSnap = await getDoc(docRef);
