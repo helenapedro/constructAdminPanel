@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Card, Button, Col, Modal, CardHeader, Form } from 'react-bootstrap';
 import * as iconsfa from 'react-icons/fa';
@@ -25,9 +25,14 @@ const ProjectDetails = ({ projectId }) => {
      const [editable, setEditable] = useState(false);
      const [formData, setFormData] = useState({});
 
+     useEffect(() => {
+          if (project) {
+               setFormData(project);
+          }
+     }, [project]);
+
      const handleEditToggle = () => {
           setEditable(!editable);
-          setFormData(project);
      };
 
      const handleChange = (e) => {

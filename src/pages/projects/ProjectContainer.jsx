@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Card, Button, Row, Col, Modal } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import * as iconsfa from 'react-icons/fa';
 import ProjectCarousel from '../../components/Project/ProjectCarousel';
@@ -132,7 +131,7 @@ const ProjectsContainer = () => {
                 </div>
             </Row>
 
-            <Modal show={showModal} onHide={closeImageModal} centered>
+            <Modal show={showModal} onHide={closeProjectModal} centered>
                 {selectedProjectId ? (
                     <ProjectDetails projectId={selectedProjectId} />
                 ) : (
@@ -141,7 +140,7 @@ const ProjectsContainer = () => {
                     </Modal.Body>
                 )}
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={closeImageModal}>
+                    <Button variant="secondary" onClick={closeProjectModal}>
                         Close
                     </Button>
                 </Modal.Footer>
