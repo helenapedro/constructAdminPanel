@@ -77,6 +77,64 @@ const ProjectDetails = ({ projectId }) => {
           setCurrentImage('');
      };
 
+     const handleImageUpload = (e) => {
+          const file = e.target.files[0];
+          if (file) {
+               const reader = new FileReader();
+               reader.onloadend = () => {
+                    setFormData({
+                         ...formData,
+                         images: [...formData.images, reader.result],
+                    });
+               };
+               reader.readAsDataURL(file);
+          }
+     };
+
+     const handleImageDelete = (index) => {
+          const updatedImages = formData.images.filter((_, i) => i !== index);
+          setFormData({
+               ...formData,
+               images: updatedImages,
+          });
+     };
+
+     const handleActivityChange = (index, field, value) => {
+          const updatedActivities = [...formData.activities];
+          updatedActivities[index][field] = value;
+          setFormData({
+               ...formData,
+               activities: updatedActivities,
+          });
+     };
+
+     const handleActivityItemChange = (activityIndex, itemIndex, value) => {
+          const updatedActivities = [...formData.activities];
+          updatedActivities[activityIndex].items[itemIndex] = value;
+          setFormData({
+               ...formData,
+               activities: updatedActivities,
+          });
+     };
+
+     const addActivityItem = (activityIndex) => {
+          const updatedActivities = [...formData.activities];
+          updatedActivities[activityIndex].items.push('');
+          setFormData({
+               ...formData,
+               activities: updatedActivities,
+          });
+     };
+
+     const removeActivityItem = (activityIndex, itemIndex) => {
+          const updatedActivities = [...formData.activities];
+          updatedActivities[activityIndex].items.splice(itemIndex, 1);
+          setFormData({
+               ...formData,
+               activities: updatedActivities,
+          });
+     };
+
      const resolveUrl = (url) => {
           const baseUrl = 'https://dh09x5tu10bt3.cloudfront.net/';
           return url.startsWith('http') ? url : `${baseUrl}${url}`;
@@ -103,36 +161,56 @@ const ProjectDetails = ({ projectId }) => {
                               handleChange={handleChange}
                               wrappedProject={wrappedProject}
                          />
-                         <p className={`${styles.projectdescription} number`}>
-                              <b>
-                                   {editable ? (
-                                        <Form.Control
-                                             type="text"
-                                             name="summaryHeader"
-                                             value={formData.summaryHeader}
-                                             onChange={handleChange}
-                                        />
-                                   ) : (
-                                        wrappedProject.summaryHeader
-                                   )}
-                              </b>
-                         </p>
-                         <ProjectActivities project={project} wrapNumbersWithClass={wrapNumbersWithClass} />
-                         <p className={styles.projectdescription}>
-                              <b>
-                                   {editable ? (
-                                        <Form.Control
-                                             type="text"
-                                             name="projectOutcome"
-                                             value={formData.projectOutcome}
-                                             onChange={handleChange}
-                                        />
-                                   ) : (
-                                        wrappedProject.projectOutcome
-                                   )}
-                              </b>
-                         </p>
-                         <ProjectImages project={project} handleImageClick={handleImageClick} resolveUrl={resolveUrl} />
+                         <Form.Group controlId="formSummaryHeader">
+                              <Form.Label>Summary Header</Form.Label>
+                              {editable ? (
+                                   <Form.Control
+                                        as="textarea"
+                                        rows={3}
+                                        name="summaryHeader"
+                                        value={formData.summaryHeader}
+                                        onChange={handleChange}
+                                   />
+                              ) : (
+                                   <p className={`${styles.projectdescription} number`}>
+                                        <b>{wrappedProject.summaryHeader}</b>
+                                   </p>
+                              )}
+                         </Form.Group>
+                         <ProjectActivities
+                              project={project}
+                              wrapNumbersWithClass={wrapNumbersWithClass}
+                              editable={editable}
+                              formData={formData}
+                              handleActivityChange={handleActivityChange}
+                              handleActivityItemChange={handleActivityItemChange}
+                              addActivityItem={addActivityItem}
+                              removeActivityItem={removeActivityItem}
+                         />
+                         <Form.Group controlId="formProjectOutcome">
+                              <Form.Label>Project Outcome</Form.Label>
+                              {editable ? (
+                                   <Form.Control
+                                        as="textarea"
+                                        rows={3}
+                                        name="projectOutcome"
+                                        value={formData.projectOutcome}
+                                        onChange={handleChange}
+                                   />
+                              ) : (
+                                   <p className={styles.projectdescription}>
+                                        <b>{wrappedProject.projectOutcome}</b>
+                                   </p>
+                              )}
+                         </Form.Group>
+                         <ProjectImages
+                              project={project}
+                              handleImageClick={handleImageClick}
+                              resolveUrl={resolveUrl}
+                              editable={editable}
+                              handleImageUpload={handleImageUpload}
+                              handleImageDelete={handleImageDelete}
+                         />
                          {editable && (
                               <>
                                    <Form.Group controlId="formOrganization">
