@@ -1,4 +1,4 @@
-import { db, doc, getDoc, collection, getDocs } from './firebase'; 
+import { db, doc, getDoc, collection, getDocs, updateDoc } from './firebase'; 
 
 export const fetchProjects = async () => {
     const querySnapshot = await getDocs(collection(db, 'projects'));

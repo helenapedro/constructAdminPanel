@@ -14,6 +14,7 @@ const ProjectDetailsCard = () => {
       <LoadingError loading={loading} error={error} />
       {!loading && !error && data && (
         <ProjectDetails
+          projectId={id}
           title={data.title}
           organization={data.organization}
           endYear={data.endYear}

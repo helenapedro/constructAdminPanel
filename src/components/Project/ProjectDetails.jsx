@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Col, Modal, Form } from 'react-bootstrap';
+import { Col, Modal, Form, Button } from 'react-bootstrap';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { fetchProjectDetails, updateProjectDetails } from '../../api';
 import { wrapProjectFields } from '../../utils/wrapProjectFields';
@@ -12,15 +12,15 @@ import ProjectEditButtons from './ProjectEditButtons';
 import numberstyles from '../../components/ui/Number.module.css';
 import imagestyles from '../../components/ui/Image.module.css';
 import containerstyles from '../../components/ui/Container.module.css';
+import styles from '../../pages/projects/Project.module.css';
 import cardstyles from '../../components/ui/card.module.css';
 
-const ProjectDetails = ({ projectId, onClose }) => {
+const ProjectDetails = ({ projectId }) => {
      const queryClient = useQueryClient();
      const { data: project, isLoading, error } = useQuery(['project', projectId], () => fetchProjectDetails(projectId));
      const mutation = useMutation((updatedData) => updateProjectDetails(projectId, updatedData), {
           onSuccess: () => {
                queryClient.invalidateQueries(['project', projectId]);
-               onClose();
           },
      });
 
@@ -154,7 +154,6 @@ const ProjectDetails = ({ projectId, onClose }) => {
 
 ProjectDetails.propTypes = {
      projectId: PropTypes.string.isRequired,
-     onClose: PropTypes.func.isRequired,
 };
 
 export default ProjectDetails;
