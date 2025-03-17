@@ -13,12 +13,14 @@ import mainStyles from '../../components/Main.module.css';
 import containerstyles from '../../components/ui/Container.module.css';
 import prodetailsstyles from '../../components/ui/ProjectDetails.module.css';
 import { fetchProjects, fetchCategories, fetchOwnerData } from '../../api';
+import ProjectDetails from '../../components/Project/ProjectDetails';
 
 const ProjectsContainer = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [modalImage, setModalImage] = useState('');
+    const [selectedProjectId, setSelectedProjectId] = useState(null);
 
     const pageSize = 8;
 
@@ -47,13 +49,23 @@ const ProjectsContainer = () => {
     const startIndex = (currentPage - 1) * pageSize;
     const paginatedProjects = filteredProjects.slice(startIndex, startIndex + pageSize);
 
-    const openModal = (image) => {
+    const openImageModal = (image) => {
         const imageUrl = image.startsWith('http') ? image : `${process.env.REACT_APP_BASE_URL}${image}`;
         setModalImage(imageUrl);
         setShowModal(true);
     };
 
-    const closeModal = () => setShowModal(false);
+    const closeImageModal = () => setShowModal(false);
+
+    const openProjectModal = (projectId) => {
+        setSelectedProjectId(projectId);
+        setShowModal(true);
+    };
+
+    const closeProjectModal = () => {
+        setSelectedProjectId(null);
+        setShowModal(false);
+    };
 
     const getCategoryName = (categoryId) => {
         const category = categories.find((cat) => cat.id === categoryId);
@@ -94,15 +106,15 @@ const ProjectsContainer = () => {
                                 <ProjectCarousel
                                     images={project.images}
                                     title={project.title}
-                                    onImageClick={openModal}
+                                    onImageClick={openImageModal}
                                 />
                             )}
 
                             <Card.Body>
                                 <div className="text-center">
-                                    <Link to={`/projects/${project.id}`}>
-                                        <Button variant="primary">View Details</Button>
-                                    </Link>
+                                    <Button variant="primary" onClick={() => openProjectModal(project.id)}>
+                                        View Details
+                                    </Button>
                                 </div>
                             </Card.Body>
                         </Card>
@@ -120,12 +132,16 @@ const ProjectsContainer = () => {
                 </div>
             </Row>
 
-            <Modal show={showModal} onHide={closeModal} centered>
-                <Modal.Body>
-                    <img src={modalImage} alt="Project" className="img-fluid" />
-                </Modal.Body>
+            <Modal show={showModal} onHide={closeImageModal} centered>
+                {selectedProjectId ? (
+                    <ProjectDetails projectId={selectedProjectId} />
+                ) : (
+                    <Modal.Body>
+                        <img src={modalImage} alt="Project" className="img-fluid" />
+                    </Modal.Body>
+                )}
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={closeModal}>
+                    <Button variant="secondary" onClick={closeImageModal}>
                         Close
                     </Button>
                 </Modal.Footer>

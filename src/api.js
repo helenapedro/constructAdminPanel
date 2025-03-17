@@ -19,3 +19,18 @@ export const fetchOwnerData = async (collectionName, documentId) => {
         throw new Error('No such document!');
     }
 };
+
+export const fetchProjectDetails = async (projectId) => {
+    const docRef = doc(db, 'projects', projectId);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+        return { id: projectId, ...docSnap.data() };
+    } else {
+        throw new Error('No such document!');
+    }
+};
+
+export const updateProjectDetails = async (projectId, updatedData) => {
+    const docRef = doc(db, 'projects', projectId);
+    await updateDoc(docRef, updatedData);
+};
